@@ -173,7 +173,7 @@ namespace Lumin.AwsLogger
         static readonly LiminitedConcurrentQueue<LogItem> errorBag = new LiminitedConcurrentQueue<LogItem>();
         public static void LogError(string msg)
         {
-            bag.Enqueue(new LogItem
+            errorBag.Enqueue(new LogItem
             {
                 Id = Interlocked.Increment(ref errorIndex),
                 Time = DateTime.Now,
