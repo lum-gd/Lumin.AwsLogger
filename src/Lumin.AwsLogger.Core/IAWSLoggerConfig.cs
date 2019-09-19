@@ -1,7 +1,7 @@
 ﻿using System;
 using Amazon.Runtime;
 
-namespace Lumin.AwsLogger.Core
+namespace Lumin.AwsLogger
 {
     /// <summary>
     /// Configuration options for logging messages to AWS CloudWatch Logs
