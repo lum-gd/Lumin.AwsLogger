@@ -150,21 +150,41 @@ namespace Lumin.AwsLogger
         /// </summary>
         public string LogStreamNamePrefix { get; set; } = string.Empty;
 
+        #region LibraryError
         static long index = 0;
-        static readonly LiminitedConcurrentQueue<LibraryLogItem> bag = new LiminitedConcurrentQueue<LibraryLogItem>();
+        static readonly LiminitedConcurrentQueue<LogItem> bag = new LiminitedConcurrentQueue<LogItem>();
         public static void LogLibraryError(string msg)
         {
-            bag.Enqueue(new LibraryLogItem
+            bag.Enqueue(new LogItem
             {
                 Id = Interlocked.Increment(ref index),
                 Time = DateTime.Now,
                 Msg = msg
             });
         }
-        public static IEnumerable<LibraryLogItem> GetLogLibraryErrors()
+        public static IEnumerable<LogItem> GetLogLibraryErrors()
         {
             return bag.ToArray().Reverse();
         }
+        #endregion
+
+        #region LibraryError
+        static long errorIndex = 0;
+        static readonly LiminitedConcurrentQueue<LogItem> errorBag = new LiminitedConcurrentQueue<LogItem>();
+        public static void LogError(string msg)
+        {
+            bag.Enqueue(new LogItem
+            {
+                Id = Interlocked.Increment(ref errorIndex),
+                Time = DateTime.Now,
+                Msg = msg
+            });
+        }
+        public static IEnumerable<LogItem> GetLatestErrorLogs()
+        {
+            return errorBag.ToArray().Reverse();
+        }
+        #endregion
     }
 
     [Serializable]
@@ -175,7 +195,7 @@ namespace Lumin.AwsLogger
         /// 
         /// </summary>
         /// <param name="limit"></param>
-        public LiminitedConcurrentQueue(int limit = 1000)
+        public LiminitedConcurrentQueue(int limit = 100)
         {
             this._limit = limit;
         }
@@ -195,7 +215,7 @@ namespace Lumin.AwsLogger
     }
 
     [Serializable]
-    public class LibraryLogItem
+    public class LogItem
     {
         public long Id { get; set; }
         public DateTime Time { get; set; }

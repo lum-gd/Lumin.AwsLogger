@@ -177,7 +177,10 @@ namespace Lumin.AwsLogger.AspNetCore
                 if (string.IsNullOrEmpty(message) && exception == null)
                     return;
             }
-
+            if (logLevel == LogLevel.Error || logLevel == LogLevel.Critical)
+            {
+                AWSLoggerConfig.LogError(message);
+            }
             _core.AddMessage(message);
         }
 

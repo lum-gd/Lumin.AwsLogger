@@ -22,8 +22,10 @@ namespace WebSample.Pages
         {
             Logger.LogInformation("Welcome to the AWS Logger. You are viewing the home page");
             LogLibraryErrors = AWSLoggerConfig.GetLogLibraryErrors();
+            LatestErrorLogs = AWSLoggerConfig.GetLatestErrorLogs();
         }
 
-        public IEnumerable<LibraryLogItem> LogLibraryErrors { get; set; }
+        public IEnumerable<LogItem> LogLibraryErrors { get; set; }
+        public IEnumerable<LogItem> LatestErrorLogs { get; set; }
     }
 }
