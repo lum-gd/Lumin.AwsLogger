@@ -1,5 +1,8 @@
 ﻿using System;
-
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using Amazon.Runtime;
 
 namespace Lumin.AwsLogger
@@ -147,12 +150,55 @@ namespace Lumin.AwsLogger
         /// </summary>
         public string LogStreamNamePrefix { get; set; } = string.Empty;
 
+        static long index = 0;
+        static readonly LiminitedConcurrentQueue<LibraryLogItem> bag = new LiminitedConcurrentQueue<LibraryLogItem>();
+        public static void LogLibraryError(string msg)
+        {
+            bag.Enqueue(new LibraryLogItem
+            {
+                Id = Interlocked.Increment(ref index),
+                Time = DateTime.Now,
+                Msg = msg
+            });
+        }
+        public static IEnumerable<LibraryLogItem> GetLogLibraryErrors()
+        {
+            return bag.ToArray().Reverse();
+        }
+    }
+
+    [Serializable]
+    public class LiminitedConcurrentQueue<T> : ConcurrentQueue<T>
+    {
+        private int _limit;
         /// <summary>
-        /// Gets and sets the LibraryLogFileName property. This is the name of the file into which errors from the AWS.Logger.Core library will be wriiten into.
-        /// <para>
-        /// The default is "aws-logger-errors.txt".
-        /// </para>
+        /// 
         /// </summary>
-        public string LibraryLogFileName { get; set; } = "aws-logger-errors.txt";
+        /// <param name="limit"></param>
+        public LiminitedConcurrentQueue(int limit = 1000)
+        {
+            this._limit = limit;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        public new void Enqueue(T item)
+        {
+            if (this.Count >= this._limit)
+            {
+                T t;
+                this.TryDequeue(out t);
+            }
+            base.Enqueue(item);
+        }
+    }
+
+    [Serializable]
+    public class LibraryLogItem
+    {
+        public long Id { get; set; }
+        public DateTime Time { get; set; }
+        public string Msg { get; set; }
     }
 }

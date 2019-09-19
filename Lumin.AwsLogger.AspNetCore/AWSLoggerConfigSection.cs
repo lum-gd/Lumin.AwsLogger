@@ -172,10 +172,6 @@ namespace Microsoft.Extensions.Configuration
             {
                 Config.LogStreamNamePrefix = loggerConfigSection[LOG_STREAM_NAME_PREFIX];
             }
-            if (loggerConfigSection[LIBRARY_LOG_FILE_NAME] != null)
-            {
-                Config.LibraryLogFileName = loggerConfigSection[LIBRARY_LOG_FILE_NAME];
-            }
 
             if (loggerConfigSection[INCLUDE_LOG_LEVEL_KEY] != null)
             {

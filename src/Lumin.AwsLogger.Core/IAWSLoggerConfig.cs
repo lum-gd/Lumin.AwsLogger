@@ -93,13 +93,5 @@ namespace Lumin.AwsLogger
         /// </para>
         /// </summary>
         string LogStreamNamePrefix { get; set; }
-
-        /// <summary>
-        /// Gets and sets the LibraryLogFileName property. This is the name of the file into which errors from the AWS.Logger.Core library will be wriiten into.
-        /// <para>
-        /// The default is going to "aws-logger-errors.txt".
-        /// </para>
-        /// </summary>
-        string LibraryLogFileName { get; }
     }
 }

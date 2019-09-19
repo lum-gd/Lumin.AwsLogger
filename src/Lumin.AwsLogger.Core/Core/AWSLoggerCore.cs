@@ -608,27 +608,9 @@ namespace Lumin.AwsLogger.Core
         private void LogLibraryServiceError(Exception ex, string serviceUrl = null)
         {
             LogLibraryAlert?.Invoke(this, new LogLibraryEventArgs(ex) { ServiceUrl = serviceUrl ?? GetServiceUrl() } );
-            if (!string.IsNullOrEmpty(_config.LibraryLogFileName))
-            {
-                LogLibraryError(ex, _config.LibraryLogFileName);
-            }
-        }
-
-        /// <summary>
-        /// Write Exception details to the file specified with the filename
-        /// </summary>
-        public static void LogLibraryError(Exception ex, string LibraryLogFileName)
-        {
             try
             {
-                using (StreamWriter w = File.AppendText(LibraryLogFileName))
-                {
-                    w.WriteLine("Log Entry : ");
-                    w.WriteLine("{0}", DateTime.Now.ToString());
-                    w.WriteLine("  :");
-                    w.WriteLine("  :{0}", ex.ToString());
-                    w.WriteLine("-------------------------------");
-                }
+                AWSLoggerConfig.LogLibraryError(ex.Message + Environment.NewLine + "StackTrace: " + ex.StackTrace);
             }
             catch (Exception e)
             {
