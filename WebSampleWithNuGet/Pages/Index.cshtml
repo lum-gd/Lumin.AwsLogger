@@ -8,3 +8,25 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div>
+    <h2>LatestErrorLogs</h2>
+    <table class="table">
+        <tr><th>id</th><th>time</th><th>msg</th></tr>
+        @foreach (var item in Model.LatestErrorLogs)
+        {
+            <tr><td>@item.Id</td><td>@item.Time</td><td>@Html.Raw(item.Msg.Replace(Environment.NewLine, "<br>"))</td></tr>
+        }
+    </table>
+</div>
+
+<div>
+    <h2>LogLibraryErrors</h2>
+    <table class="table">
+        <tr><th>id</th><th>time</th><th>msg</th></tr>
+        @foreach (var item in Model.LogLibraryErrors)
+        {
+            <tr><td>@item.Id</td><td>@item.Time</td><td>@Html.Raw(item.Msg.Replace(Environment.NewLine, "<br>"))</td></tr>
+        }
+    </table>
+</div>

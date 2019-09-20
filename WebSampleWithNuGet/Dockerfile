@@ -3,4 +3,4 @@
 WORKDIR /app
 COPY . .
 
-ENTRYPOINT ["dotnet", "WebSample.dll"]
+ENTRYPOINT ["dotnet", "WebSampleWithNuGet.dll"]

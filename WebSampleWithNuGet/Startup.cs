@@ -8,17 +8,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace WebSampleWithNuGet
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            this._logger = logger;
         }
 
         public IConfiguration Configuration { get; }
+
+        private ILogger<Startup> _logger;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -37,6 +41,11 @@ namespace WebSampleWithNuGet
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Example Logging
+            _logger.LogInformation("Check the AWS Console CloudWatch Logs console in cn-northwest-1");
+            _logger.LogInformation("to see messages in the log streams for the");
+            _logger.LogInformation("log group /ecs/AspNetCore.WebSample");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
