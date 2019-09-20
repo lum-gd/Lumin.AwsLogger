@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Lumin Yang</Authors>
+    <Company>NTT</Company>
+    <Product>Lumin.AwsLogger</Product>
   </PropertyGroup>
 
   <ItemGroup>
