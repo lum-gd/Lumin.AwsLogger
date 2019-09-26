@@ -51,6 +51,10 @@ namespace Lumin.AwsLogger.SeriLog
             {
                 message = string.Concat(message, Environment.NewLine);
             }
+            if (logEvent.Level == LogEventLevel.Error || logEvent.Level == LogEventLevel.Fatal)
+            {
+                AWSLoggerConfig.LogError(message);
+            }
             _core.AddMessage(message);
         }
 

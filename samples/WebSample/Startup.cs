@@ -10,20 +10,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace WebSample
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, ILogger<Startup> logger)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            this._logger = logger;
         }
 
         public IConfiguration Configuration { get; }
-
-        private ILogger<Startup> _logger;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -43,9 +41,7 @@ namespace WebSample
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             // Example Logging
-            _logger.LogInformation("Check the AWS Console CloudWatch Logs console in cn-northwest-1");
-            _logger.LogInformation("to see messages in the log streams for the");
-            _logger.LogInformation("log group AspNetCore.WebSample");
+            Log.Information("log group AspNetCore.WebSample");
 
             if (env.IsDevelopment())
             {
