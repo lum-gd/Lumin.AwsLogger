@@ -10,6 +10,7 @@
     <RepositoryUrl>https://github.com/luminyang/Lumin.AwsLogger</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Copyright>NTT</Copyright>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
